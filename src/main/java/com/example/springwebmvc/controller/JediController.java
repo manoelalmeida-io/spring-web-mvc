@@ -22,8 +22,10 @@ public class JediController {
     @GetMapping("/jedi")
     public ModelAndView jedi () {
         final ModelAndView modelAndView = new ModelAndView();
+
         modelAndView.setViewName("jedi");
-        modelAndView.addObject("allJedi", repository.getAllJedi());
+        modelAndView.addObject("allJedi", repository.findAll());
+
         return modelAndView;
     }
 
@@ -34,15 +36,14 @@ public class JediController {
             return "new-jedi";
         }
 
-        repository.add(jedi);
-
+        repository.save(jedi);
         redirectAttributes.addFlashAttribute("message", "Jedi cadastrado com sucesso.");
 
         return "redirect:jedi";
     }
 
     @GetMapping("/new-jedi")
-    public ModelAndView newjedi () {
+    public ModelAndView newJedi () {
         final ModelAndView modelAndView = new ModelAndView();
         modelAndView.setViewName("new-jedi");
         modelAndView.addObject("jedi", new Jedi());
